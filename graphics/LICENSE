@@ -1,0 +1,19 @@
+# License
+
+All files in this folder were extracted from the [rp2040-datasheet.pdf] which is
+licensed under a a Creative Commons [Attribution-NoDerivatives 4.0][cc-by-nd]
+International (CC BY-ND). These graphics are used in conjunction with the code
+examples to better explain the software in this repository. The original graphics
+and their accompanied text can be found in the [rp2040-datasheet.pdf].
+
+If you represent Raspberry Pi Ltd and disagree with the this usage of licensed materials,
+please reach out to @DusterTheFirst, the repository owner, and they will adjust the
+content to follow your guidelines.
+
+The material in this directory was extracted, using Inkscape, from
+
+    build-date: 2023-03-02
+    build-version: ae3b121-clean
+
+[rp2040-datasheet.pdf]: https://datasheets.raspberrypi.com/rp2040/rp2040-datasheet.pdf
+[cc-by-nd]: https://creativecommons.org/licenses/by-nd/4.0/
