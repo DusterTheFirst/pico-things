@@ -1,0 +1,8 @@
+; Hello
+
+.program piss
+
+public entry_point:
+.wrap_target
+    nop
+.wrap
