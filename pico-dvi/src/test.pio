@@ -1,8 +1,11 @@
 ; Hello
 
-.program piss
+.program a
+.wrap_target
+    nop
+.wrap
 
-public entry_point:
+.program b
 .wrap_target
     nop
 .wrap
