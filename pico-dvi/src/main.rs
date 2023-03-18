@@ -6,10 +6,10 @@ use embedded_hal::digital::v2::OutputPin;
 use panic_probe as _;
 
 // Board support package
-use rp_pico::{self as bsp};
+use rp_pico::{self as bsp, hal::pio::PIOBuilder};
 
 use bsp::{
-    hal::{gpio::PinState, sio::Sio, watchdog::Watchdog, Clock},
+    hal::{gpio::PinState, pio, prelude::*, sio::Sio, watchdog::Watchdog, Clock},
     pac, Pins,
 };
 use cortex_m::delay::Delay;
@@ -59,6 +59,21 @@ fn entry() -> ! {
         dbg!(clocks.system_clock.freq().to_Hz()),
     );
 
+    let (mut pio, state_machine_red, state_machine_green, state_machine_blue, _) =
+        peripherals.PIO0.split(&mut peripherals.RESETS);
+
+    let dvi_output_program = pio_proc::pio_file!("src/dvi_differential.pio");
+
+    let installed_program = pio.install(&dvi_output_program.program).unwrap();
+    let (state_machine_red, _, red_tx) = PIOBuilder::from_program(installed_program)
+        .side_set_pin_base(10)
+        .clock_divisor_fixed_point(1, 1)
+        .autopull(true)
+        .buffers(pio::Buffers::OnlyRx)
+        .pull_threshold(8)
+        .build(state_machine_red);
+    // TODO: DMA and 2 other state machines
+
     loop {
         info!("high");
         led_pin.set_high().unwrap();
@@ -66,16 +81,5 @@ fn entry() -> ! {
         info!("low");
         led_pin.set_low().unwrap();
         delay.delay_ms(500);
-    }
-}
-
-struct DviPhy {}
-
-impl DviPhy {
-    pub fn new() {
-        let program_a = pio_proc::pio_file!("src/test.pio", select_program("a"));
-        let program_b = pio_proc::pio_file!("src/test.pio", select_program("b"));
-
-        let mut program_c = pio::Assembler::<{ pio::RP2040_MAX_PROGRAM_SIZE }>::new();
     }
 }
