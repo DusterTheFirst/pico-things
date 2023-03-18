@@ -35,7 +35,7 @@ fn entry() -> ! {
     let single_cycle_io = Sio::new(peripherals.SIO);
 
     // External high-speed crystal on the pico board is 12Mhz
-    let mut clocks = init_clocks(
+    let clocks = init_clocks(
         peripherals.XOSC,
         peripherals.ROSC,
         peripherals.CLOCKS,
@@ -69,9 +69,9 @@ fn entry() -> ! {
     }
 }
 
-struct DviPHY {}
+struct DviPhy {}
 
-impl DviPHY {
+impl DviPhy {
     pub fn new() {
         let program_a = pio_proc::pio_file!("src/test.pio", select_program("a"));
         let program_b = pio_proc::pio_file!("src/test.pio", select_program("b"));
