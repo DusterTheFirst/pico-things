@@ -119,7 +119,7 @@ where
         let positive_id = pos_pin.id().num;
         let negative_id = neg_pin.id().num;
 
-        assert_eq!(
+        defmt::assert_eq!(
             negative_id.abs_diff(positive_id),
             1,
             "differential pins must be sequential"

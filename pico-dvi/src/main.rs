@@ -3,11 +3,11 @@
 #![deny(clippy::float_arithmetic, clippy::lossy_float_literal)]
 
 use defmt_rtt as _;
-use embedded_hal::digital::v2::OutputPin;
-use panic_probe as _;
+use panic_probe as _; // TODO: remove if you need 5kb of space, since panicking + formatting machinery is huge
 
 use cortex_m::delay::Delay;
 use defmt::{dbg, info};
+use embedded_hal::digital::v2::OutputPin;
 use rp_pico::{
     hal::{gpio::PinState, pwm, sio::Sio, watchdog::Watchdog, Clock},
     pac, Pins,
