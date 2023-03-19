@@ -6,8 +6,8 @@ use rp_pico::{
             OutputSlewRate, Pin, PinId, PinMode, PullDown, ValidPinMode,
         },
         pio::{
-            self, InstalledProgram, PIOBuilder, StateMachine, StateMachineIndex, Stopped, Tx,
-            UninitStateMachine,
+            self, InstalledProgram, PIOBuilder, StateMachine, StateMachineGroup3,
+            StateMachineIndex, Stopped, Tx, UninitStateMachine,
         },
         pwm::{self, FreeRunning, Slice, ValidPwmOutputPin},
     },
@@ -71,6 +71,13 @@ pub struct DviSerializer<
     pio: pio::PIO<PIO>, // FIXME:
     data_pins: DviDataPins<RedPos, RedNeg, GreenPos, GreenNeg, BluePos, BlueNeg>, // FIXME:
     clock_pins: DviClockPins<SliceId, Pos, Neg, FunctionPwm>,
+
+    state_machines: StateMachineGroup3<PIO, pio::SM0, pio::SM1, pio::SM2, Stopped>,
+    tx_fifo: (
+        Tx<(PIO, pio::SM0)>,
+        Tx<(PIO, pio::SM1)>,
+        Tx<(PIO, pio::SM2)>,
+    ),
 }
 
 impl<PIO, SliceId, ClockPos, ClockNeg, RedPos, RedNeg, GreenPos, GreenNeg, BluePos, BlueNeg>
@@ -217,10 +224,19 @@ where
                 clock_neg,
                 pwm_slice: clock_pins.pwm_slice,
             },
+            state_machines: state_machine_red
+                .with(state_machine_green)
+                .with(state_machine_blue),
+            tx_fifo: (tx_red, tx_green, tx_blue),
         }
     }
 
     pub fn enable(mut self) {
-        self.clock_pins.pwm_slice.enable(); // TODO: move to enable
+        let state_machines = self.state_machines.sync().start();
+        self.clock_pins.pwm_slice.enable();
+
+        // TODO: TMDS LANES
+        // TODO: DMA
+        // TODO: DVI typestate?
     }
 }
