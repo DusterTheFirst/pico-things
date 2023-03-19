@@ -1,5 +1,6 @@
 #![no_std]
 #![no_main]
+#![deny(clippy::float_arithmetic, clippy::lossy_float_literal)]
 
 use defmt_rtt as _;
 use embedded_hal::digital::v2::OutputPin;
