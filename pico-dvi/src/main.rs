@@ -5,22 +5,23 @@ use defmt_rtt as _;
 use embedded_hal::digital::v2::OutputPin;
 use panic_probe as _;
 
-// Board support package
-use rp_pico::{self as bsp, hal::pio::PIOBuilder};
-
-use bsp::{
-    hal::{gpio::PinState, pio, prelude::*, sio::Sio, watchdog::Watchdog, Clock},
-    pac, Pins,
-};
 use cortex_m::delay::Delay;
 use defmt::{dbg, info};
+use rp_pico::{
+    hal::{gpio::PinState, pwm, sio::Sio, watchdog::Watchdog, Clock},
+    pac, Pins,
+};
 
-use crate::clock::init_clocks;
+use crate::{
+    clock::init_clocks,
+    dvi::{DviClockPins, DviDataPins, DviSerializer},
+};
 
 mod clock;
+mod dvi;
 
 // Separate macro annotated function to make rust-analyzer fixes apply better
-#[bsp::entry]
+#[rp_pico::entry]
 fn macro_entry() -> ! {
     entry();
 }
@@ -52,27 +53,34 @@ fn entry() -> ! {
         &mut peripherals.RESETS,
     );
 
-    let mut led_pin = pins.gpio15.into_push_pull_output_in_state(PinState::Low);
+    let mut led_pin = pins.gpio16.into_push_pull_output_in_state(PinState::Low);
 
     let mut delay = Delay::new(
         core_peripherals.SYST,
         dbg!(clocks.system_clock.freq().to_Hz()),
     );
 
-    let (mut pio, state_machine_red, state_machine_green, state_machine_blue, _) =
-        peripherals.PIO0.split(&mut peripherals.RESETS);
+    let pwm_slices = pwm::Slices::new(peripherals.PWM, &mut peripherals.RESETS);
 
-    let dvi_output_program = pio_proc::pio_file!("src/dvi_differential.pio");
+    let dvi = DviSerializer::new(
+        peripherals.PIO0,
+        &mut peripherals.RESETS,
+        DviDataPins {
+            red_pos: pins.gpio10,
+            red_neg: pins.gpio11,
+            green_pos: pins.gpio12,
+            green_neg: pins.gpio13,
+            blue_pos: pins.gpio14,
+            blue_neg: pins.gpio15,
+        },
+        DviClockPins {
+            clock_pos: pins.gpio8,
+            clock_neg: pins.gpio9,
+            pwm_slice: pwm_slices.pwm4,
+        },
+    );
 
-    let installed_program = pio.install(&dvi_output_program.program).unwrap();
-    let (state_machine_red, _, red_tx) = PIOBuilder::from_program(installed_program)
-        .side_set_pin_base(10)
-        .clock_divisor_fixed_point(1, 1)
-        .autopull(true)
-        .buffers(pio::Buffers::OnlyRx)
-        .pull_threshold(8)
-        .build(state_machine_red);
-    // TODO: DMA and 2 other state machines
+    // dvi.enable();
 
     loop {
         info!("high");

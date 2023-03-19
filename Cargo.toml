@@ -23,6 +23,8 @@ pio      = "0.2.1"
 pio-proc = "0.2.1"
 rp-pico  = "0.7.0"
 
+fugit = { version = "0.3.6", features = ["defmt"] }
+
 no-panics-whatsoever = "0.1.0"
 
 # cargo build/run
