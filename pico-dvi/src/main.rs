@@ -14,7 +14,7 @@ use rp_pico::{
 
 use crate::{
     clock::init_clocks,
-    dvi::{DviClockPins, DviDataPins, DviSerializer},
+    dvi::serializer::{DviClockPins, DviDataPins, DviSerializer},
 };
 
 mod clock;
@@ -32,6 +32,28 @@ fn entry() -> ! {
     let mut peripherals = pac::Peripherals::take().unwrap();
     let core_peripherals = pac::CorePeripherals::take().unwrap();
 
+    {
+        let is_fpga = peripherals.SYSINFO.platform.read().fpga().bit();
+        let is_asic = peripherals.SYSINFO.platform.read().asic().bit();
+
+        let git_hash = peripherals.SYSINFO.gitref_rp2040.read().bits();
+
+        let manufacturer = peripherals.SYSINFO.chip_id.read().manufacturer().bits();
+        let part = peripherals.SYSINFO.chip_id.read().part().bits();
+        let revision = peripherals.SYSINFO.chip_id.read().revision().bits();
+        info!(
+            "SYSINFO
+platform:
+    FPGA: {}
+    ASIC: {}
+gitref_rp2040: {:x}
+chip_id:
+    manufacturer: {:X}
+    part:         {}
+    revision:     {}",
+            is_fpga, is_asic, git_hash, manufacturer, part, revision
+        );
+    }
     let mut watchdog = Watchdog::new(peripherals.WATCHDOG);
     let single_cycle_io = Sio::new(peripherals.SIO);
 
@@ -82,6 +104,9 @@ fn entry() -> ! {
 
     // dvi.enable();
 
+    rom();
+    ram();
+
     loop {
         info!("high");
         led_pin.set_high().unwrap();
@@ -90,4 +115,15 @@ fn entry() -> ! {
         led_pin.set_low().unwrap();
         delay.delay_ms(500);
     }
+}
+
+// Functions and statics are placed in rom by default
+fn rom() {
+    dbg!(rom as fn() as *const ());
+}
+
+// This function will be placed in ram
+#[link_section = ".ram"]
+fn ram() {
+    dbg!(ram as fn() as *const ());
 }

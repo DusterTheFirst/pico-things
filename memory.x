@@ -12,4 +12,10 @@ SECTIONS {
     {
         KEEP(*(.boot2));
     } > BOOT2
+
+    /* ### Any high-bandwidth statics or code to put in ram */
+    .ram ORIGIN(RAM) :
+    {
+        KEEP(*(.ram));
+    } > RAM
 } INSERT BEFORE .text;
