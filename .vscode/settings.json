@@ -3,6 +3,7 @@
     "rust-analyzer.check.allTargets": false,
     "cSpell.words": [
         "rosc",
+        "sysinfo",
         "xosc"
     ]
 }

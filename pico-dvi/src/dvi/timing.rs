@@ -1,5 +1,5 @@
 //! timing information yoinked from
-//! https://github.com/Wren6991/PicoDVI/blob/51237271437e9d1eb62c97e40171fbf6ffe01ac6/software/libdvi/dvi_timing.c
+//! <https://github.com/Wren6991/PicoDVI/blob/51237271437e9d1eb62c97e40171fbf6ffe01ac6/software/libdvi/dvi_timing.c>
 
 // VGA -- we do this mode properly, with a pretty comfortable clk_sys (252 MHz)
 // const struct dvi_timing __dvi_const(dvi_timing_640x480p_60hz) = {

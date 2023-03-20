@@ -21,7 +21,7 @@ panic-probe = { version = "0.3.0", features = ["print-defmt"] }
 
 pio      = "0.2.1"
 pio-proc = "0.2.1"
-rp-pico  = "0.7.0"
+rp-pico  = { version = "0.7.0", features = ["rom-v2-intrinsics", "rp2040-e5"] }
 
 fugit = { version = "0.3.6", features = ["defmt"] }
 

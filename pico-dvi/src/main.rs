@@ -1,6 +1,5 @@
 #![no_std]
 #![no_main]
-#![deny(clippy::float_arithmetic, clippy::lossy_float_literal)]
 
 use defmt_rtt as _;
 use panic_probe as _; // TODO: remove if you need 5kb of space, since panicking + formatting machinery is huge
@@ -33,28 +32,8 @@ fn entry() -> ! {
     let mut peripherals = pac::Peripherals::take().unwrap();
     let core_peripherals = pac::CorePeripherals::take().unwrap();
 
-    {
-        let is_fpga = peripherals.SYSINFO.platform.read().fpga().bit();
-        let is_asic = peripherals.SYSINFO.platform.read().asic().bit();
+    sysinfo(&peripherals.SYSINFO);
 
-        let git_hash = peripherals.SYSINFO.gitref_rp2040.read().bits();
-
-        let manufacturer = peripherals.SYSINFO.chip_id.read().manufacturer().bits();
-        let part = peripherals.SYSINFO.chip_id.read().part().bits();
-        let revision = peripherals.SYSINFO.chip_id.read().revision().bits();
-        info!(
-            "SYSINFO
-platform:
-    FPGA: {}
-    ASIC: {}
-gitref_rp2040: {:x}
-chip_id:
-    manufacturer: {:X}
-    part:         {}
-    revision:     {}",
-            is_fpga, is_asic, git_hash, manufacturer, part, revision
-        );
-    }
     let mut watchdog = Watchdog::new(peripherals.WATCHDOG);
     let single_cycle_io = Sio::new(peripherals.SIO);
 
@@ -116,6 +95,28 @@ chip_id:
         led_pin.set_low().unwrap();
         delay.delay_ms(500);
     }
+}
+
+fn sysinfo(sysinfo: &pac::SYSINFO) {
+    let is_fpga = sysinfo.platform.read().fpga().bit();
+    let is_asic = sysinfo.platform.read().asic().bit();
+    let git_hash = sysinfo.gitref_rp2040.read().bits();
+    let manufacturer = sysinfo.chip_id.read().manufacturer().bits();
+    let part = sysinfo.chip_id.read().part().bits();
+    let revision = sysinfo.chip_id.read().revision().bits();
+
+    info!(
+        "SYSINFO
+platform:
+    FPGA: {}
+    ASIC: {}
+gitref_rp2040: {:x}
+chip_id:
+    manufacturer: {:X}
+    part:         {}
+    revision:     {}",
+        is_fpga, is_asic, git_hash, manufacturer, part, revision
+    );
 }
 
 // Functions and statics are placed in rom by default

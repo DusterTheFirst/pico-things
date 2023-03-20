@@ -18,4 +18,10 @@ SECTIONS {
     {
         KEEP(*(.ram));
     } > RAM
+
+    /*
+        TODO: scratch_x and scratch_y (pg 122)
+        https://github.com/raspberrypi/pico-sdk/blob/f396d05f8252d4670d4ea05c8b7ac938ef0cd381/src/rp2_common/pico_standard_link/memmap_no_flash.ld#L27-L28
+        https://github.com/raspberrypi/pico-sdk/blob/f396d05f8252d4670d4ea05c8b7ac938ef0cd381/src/rp2_common/pico_standard_link/memmap_no_flash.ld#L151-L166
+    */
 } INSERT BEFORE .text;
