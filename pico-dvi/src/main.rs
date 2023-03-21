@@ -8,7 +8,7 @@ use cortex_m::delay::Delay;
 use defmt::{dbg, info};
 use embedded_hal::digital::v2::OutputPin;
 use rp_pico::{
-    hal::{gpio::PinState, pwm, sio::Sio, watchdog::Watchdog, Clock},
+    hal::{dma::DMAExt, gpio::PinState, pwm, sio::Sio, watchdog::Watchdog, Clock},
     pac, Pins,
 };
 
@@ -19,6 +19,8 @@ use crate::{
 
 mod clock;
 mod dvi;
+mod framebuffer;
+mod link;
 
 // Separate macro annotated function to make rust-analyzer fixes apply better
 #[rp_pico::entry]
@@ -63,6 +65,7 @@ fn entry() -> ! {
     );
 
     let pwm_slices = pwm::Slices::new(peripherals.PWM, &mut peripherals.RESETS);
+    let dma = peripherals.DMA.split(&mut peripherals.RESETS);
 
     let dvi = DviSerializer::new(
         peripherals.PIO0,
@@ -88,6 +91,9 @@ fn entry() -> ! {
     ram_x();
     ram_y();
 
+    unsafe { dbg!(&framebuffer::FRAMEBUFFER_16BPP as *const _) };
+    unsafe { dbg!(&framebuffer::FRAMEBUFFER_8BPP as *const _) };
+
     loop {
         info!("high");
         led_pin.set_high().unwrap();
@@ -109,13 +115,13 @@ fn sysinfo(sysinfo: &pac::SYSINFO) {
     info!(
         "SYSINFO
 platform:
-    FPGA: {}
-    ASIC: {}
-gitref_rp2040: {:x}
+    FPGA: {=bool}
+    ASIC: {=bool}
+gitref_rp2040: {=u32:x}
 chip_id:
-    manufacturer: {:X}
-    part:         {}
-    revision:     {}",
+    manufacturer: {=u16:X}
+    part:         {=u16}
+    revision:     {=u8}",
         is_fpga, is_asic, git_hash, manufacturer, part, revision
     );
 }
@@ -135,14 +141,4 @@ fn ram_x() {
 #[link_section = scratch!(y, ram)]
 fn ram_y() {
     dbg!(module_path!(), ram_y as fn() as *const ());
-}
-
-#[macro_export]
-macro_rules! scratch {
-    (x, $fn_name:ident) => {
-        concat!(".scratch_x.", file!(), ".", line!(), ".", stringify!($fn_name))
-    };
-    (y, $fn_name:ident) => {
-        concat!(".scratch_y.", file!(), ".", line!(), ".", stringify!($fn_name))
-    };
 }
