@@ -85,7 +85,8 @@ fn entry() -> ! {
     // dvi.enable();
 
     rom();
-    ram();
+    ram_x();
+    ram_y();
 
     loop {
         info!("high");
@@ -125,7 +126,23 @@ fn rom() {
 }
 
 // This function will be placed in ram
-#[link_section = ".ram"]
-fn ram() {
-    dbg!(ram as fn() as *const ());
+#[link_section = scratch!(x, ram)]
+fn ram_x() {
+    dbg!(module_path!(), ram_x as fn() as *const ());
+}
+
+// This function will be placed in ram
+#[link_section = scratch!(y, ram)]
+fn ram_y() {
+    dbg!(module_path!(), ram_y as fn() as *const ());
+}
+
+#[macro_export]
+macro_rules! scratch {
+    (x, $fn_name:ident) => {
+        concat!(".scratch_x.", file!(), ".", line!(), ".", stringify!($fn_name))
+    };
+    (y, $fn_name:ident) => {
+        concat!(".scratch_y.", file!(), ".", line!(), ".", stringify!($fn_name))
+    };
 }
