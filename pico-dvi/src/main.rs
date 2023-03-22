@@ -88,6 +88,7 @@ fn entry() -> ! {
     // dvi.enable();
 
     rom();
+    ram();
     ram_x();
     ram_y();
 
@@ -132,13 +133,19 @@ fn rom() {
 }
 
 // This function will be placed in ram
-#[link_section = scratch!(x, ram)]
-fn ram_x() {
-    dbg!(module_path!(), ram_x as fn() as *const ());
+#[link_section = link!(ram, ram)]
+fn ram() {
+    dbg!(ram as fn() as *const ());
 }
 
 // This function will be placed in ram
-#[link_section = scratch!(y, ram)]
+#[link_section = link!(ram small 0, ram_x)]
+fn ram_x() {
+    dbg!(ram_x as fn() as *const ());
+}
+
+// This function will be placed in ram
+#[link_section = link!(ram small 1, ram_y)]
 fn ram_y() {
-    dbg!(module_path!(), ram_y as fn() as *const ());
+    dbg!(ram_y as fn() as *const ());
 }
