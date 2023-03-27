@@ -7,6 +7,7 @@ use panic_probe as _; // TODO: remove if you need 5kb of space, since panicking 
 use cortex_m::delay::Delay;
 use defmt::{dbg, info};
 use embedded_hal::digital::v2::OutputPin;
+use pico_common::link;
 use rp_pico::{
     hal::{dma::DMAExt, gpio::PinState, pwm, sio::Sio, watchdog::Watchdog, Clock},
     pac, Pins,
@@ -20,7 +21,6 @@ use crate::{
 mod clock;
 mod dvi;
 mod framebuffer;
-mod link;
 
 // Separate macro annotated function to make rust-analyzer fixes apply better
 #[rp_pico::entry]

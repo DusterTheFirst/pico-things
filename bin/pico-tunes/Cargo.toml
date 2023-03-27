@@ -1,0 +1,27 @@
+[package]
+edition = "2021"
+name    = "pico-tunes"
+version = "0.1.0"
+
+[dependencies]
+cortex-m     = { workspace = true }
+cortex-m-rt  = { workspace = true }
+embedded-hal = { workspace = true }
+
+defmt     = { workspace = true }
+defmt-rtt = { workspace = true }
+
+fugit    = { workspace = true }
+pio      = { workspace = true }
+pio-proc = { workspace = true }
+rp-pico  = { workspace = true }
+
+panic-probe = { workspace = true }
+
+rtic = { git = "https://github.com/rtic-rs/rtic", version = "2.0.0-alpha.0", features = ["thumbv6-backend"] }
+# rtic-monotonics = { git = "https://github.com/rtic-rs/rtic", version = "1.0.0-alpha.0", features = ["rp2040"] }
+rtic-monotonics = { git = "https://github.com/rtic-rs/rtic", version = "1.0.0-alpha.0", features = ["cortex-m-systick"] }
+
+mavlink      = { git = "https://github.com/mavlink/rust-mavlink", rev = "240551bda2ab22923badd8a3beb36e8082181cd0", default-features = false, features = ["embedded", "standard"] }
+micromath    = "2.0.0"
+num-rational = { version = "0.4.1", default-features = false }
