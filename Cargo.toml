@@ -1,5 +1,5 @@
 [workspace]
-members  = ["bin/*", "lib/*"]
+members  = ["pico-common", "projects/*"]
 resolver = "2"
 
 [workspace.package]
@@ -24,7 +24,7 @@ pio      = "0.2.1"
 pio-proc = "0.2.1"
 rp-pico  = { version = "0.7.0", features = ["rom-v2-intrinsics"] }
 
-pico-common = { path = "lib/pico-common" }
+pico-common = { path = "pico-common" }
 
 no-panics-whatsoever = "0.1.0"
 

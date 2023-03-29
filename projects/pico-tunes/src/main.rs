@@ -10,7 +10,7 @@ mod music;
 mod app {
     use defmt::info;
     use embedded_hal::{digital::v2::PinState, prelude::*};
-    use futures_util::future::join;
+    use futures::future::join;
     use rp_pico::{
         hal::{
             clocks,
