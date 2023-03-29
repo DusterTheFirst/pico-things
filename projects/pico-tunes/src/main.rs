@@ -9,17 +9,10 @@ mod music;
 #[rtic::app(device = rp_pico::hal::pac, dispatchers = [SW0_IRQ, SW1_IRQ, SW2_IRQ, SW3_IRQ, SW4_IRQ, SW5_IRQ])]
 mod app {
     use defmt::info;
-    use embedded_hal::{digital::v2::PinState, prelude::*};
+    use embedded_hal::prelude::*;
     use futures::future::join;
     use rp_pico::{
-        hal::{
-            clocks,
-            gpio::{
-                bank0::{Gpio15, Gpio16, Gpio17},
-                Output, OutputDriveStrength, OutputSlewRate, Pin, PushPull,
-            },
-            pwm, rom_data, Sio, Watchdog,
-        },
+        hal::{clocks, pwm, rom_data, Sio, Watchdog},
         pac,
     };
     use rtic_monotonics::systick::Systick;

@@ -15,19 +15,19 @@ SECTIONS {
     } > BOOT2
 
     /* ### Main ram section */
-    .ram : {
+    /* .ram ORIGIN(RAM) : { TODO: FIXME: IDK HOW LINKERS WORK
         *(.ram.*)
         . = ALIGN(4);
-    } > RAM
+    } > RAM */
 
     /* ### Small 4kb memory sections for high bandwidth code or data per core */
-    .small.0 : {
+    /* .small.0 ORIGIN(SMALL0) : { FIXME: THESE CAUSE EVERYTHING BUT PICO-DVI TO RUN
         *(.small.0.*)
         . = ALIGN(4);
     } > SMALL0
 
-    .small.1 : {
+    .small.1 ORIGIN(SMALL1) : {
         *(.small.1.*)
         . = ALIGN(4);
-    } > SMALL1
+    } > SMALL1 */
 } INSERT BEFORE .text;
