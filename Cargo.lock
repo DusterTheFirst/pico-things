@@ -754,6 +754,22 @@ dependencies = [
 ]
 
 [[package]]
+name = "pico-rtic-timer-2040-repr"
+version = "0.0.0"
+dependencies = [
+ "cortex-m",
+ "cortex-m-rt",
+ "defmt",
+ "defmt-rtt",
+ "embedded-hal",
+ "fugit",
+ "panic-probe",
+ "rp-pico",
+ "rtic",
+ "rtic-monotonics",
+]
+
+[[package]]
 name = "pico-tunes"
 version = "0.0.0"
 dependencies = [
@@ -1030,6 +1046,7 @@ dependencies = [
  "cfg-if",
  "cortex-m",
  "fugit",
+ "rp2040-pac",
  "rtic-time",
 ]
 
