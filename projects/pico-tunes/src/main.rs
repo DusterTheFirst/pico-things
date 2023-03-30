@@ -5,6 +5,7 @@
 use {defmt_rtt as _, panic_probe as _}; // Panic handler and defmt logger
 
 mod music;
+mod mid;
 
 #[rtic::app(device = rp_pico::hal::pac, dispatchers = [SW0_IRQ, SW1_IRQ, SW2_IRQ, SW3_IRQ, SW4_IRQ, SW5_IRQ])]
 mod app {
