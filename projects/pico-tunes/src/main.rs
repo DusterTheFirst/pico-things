@@ -12,7 +12,10 @@ mod app {
     use embedded_hal::prelude::*;
     use futures::future::join;
     use rp_pico::{
-        hal::{clocks, pwm, rom_data, Sio, Watchdog},
+        hal::{
+            clocks::{self, Clock},
+            pwm, rom_data, Sio, Watchdog,
+        },
         pac,
     };
     use rtic_monotonics::systick::Systick;
@@ -78,8 +81,8 @@ mod app {
 
         Systick::start(
             core_peripherals.SYST,
-            125_000_000,
-            rtic_monotonics::make_systick_handler!(),
+            clocks.system_clock.freq().to_Hz(),
+            rtic_monotonics::create_systick_token!(),
         );
 
         let pwm_slices = pwm::Slices::new(peripherals.PWM, &mut peripherals.RESETS);

@@ -62,15 +62,15 @@ mod app {
         #[cfg(feature = "systick")]
         rtic_monotonics::systick::Systick::start(
             core_peripherals.SYST,
-            125_000_000,
-            rtic_monotonics::make_systick_handler!(),
+            clocks.system_clock.freq().to_Hz(),
+            rtic_monotonics::create_systick_token!(),
         );
 
         #[cfg(feature = "rp2040")]
         rtic_monotonics::rp2040::Timer::start(
             peripherals.TIMER,
             &mut peripherals.RESETS,
-            rtic_monotonics::make_rp2040_monotonic_handler!(),
+            rtic_monotonics::create_rp2040_monotonic_token!(),
         );
 
         one_second::spawn().unwrap();

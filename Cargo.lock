@@ -178,9 +178,9 @@ checksum = "f578e8e2c440e7297e008bb5486a3a8a194775224bbc23729b0dbdfaeebf162e"
 
 [[package]]
 name = "defmt"
-version = "0.3.2"
+version = "0.3.3"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "d3a0ae7494d9bff013d7b89471f4c424356a71e9752e0c78abe7e6c608a16bb3"
+checksum = "d03193cde597714ff8a5005ccd61cd1b7aff5616eaca7c67905982cb6f347ff4"
 dependencies = [
  "bitflags",
  "defmt-macros",
@@ -188,9 +188,9 @@ dependencies = [
 
 [[package]]
 name = "defmt-macros"
-version = "0.3.3"
+version = "0.3.4"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "8500cbe4cca056412efce4215a63d0bc20492942aeee695f23b624a53e0a6854"
+checksum = "82610855c67a4dc36299cc6bfcf140f329e4f013582531c7ba7d32512ddabc47"
 dependencies = [
  "defmt-parser",
  "proc-macro-error",
@@ -201,9 +201,12 @@ dependencies = [
 
 [[package]]
 name = "defmt-parser"
-version = "0.3.1"
+version = "0.3.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "0db23d29972d99baa3de2ee2ae3f104c10564a6d05a346eb3f4c4f2c0525a06e"
+checksum = "e15e994575e38332cf4a2dc9dc745ff6a65695d37a41e00efadd57fcd42c1ba4"
+dependencies = [
+ "thiserror",
+]
 
 [[package]]
 name = "defmt-rtt"
@@ -357,9 +360,9 @@ dependencies = [
 
 [[package]]
 name = "futures"
-version = "0.3.27"
+version = "0.3.28"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "531ac96c6ff5fd7c62263c5e3c67a603af4fcaee2e1a0ae5565ba3a11e69e549"
+checksum = "23342abe12aba583913b2e62f22225ff9c950774065e4bfb61a19cd9770fec40"
 dependencies = [
  "futures-channel",
  "futures-core",
@@ -371,9 +374,9 @@ dependencies = [
 
 [[package]]
 name = "futures-channel"
-version = "0.3.27"
+version = "0.3.28"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "164713a5a0dcc3e7b4b1ed7d3b433cabc18025386f9339346e8daf15963cf7ac"
+checksum = "955518d47e09b25bbebc7a18df10b81f0c766eaf4c4f1cccef2fca5f2a4fb5f2"
 dependencies = [
  "futures-core",
  "futures-sink",
@@ -381,33 +384,33 @@ dependencies = [
 
 [[package]]
 name = "futures-core"
-version = "0.3.27"
+version = "0.3.28"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "86d7a0c1aa76363dac491de0ee99faf6941128376f1cf96f07db7603b7de69dd"
+checksum = "4bca583b7e26f571124fe5b7561d49cb2868d79116cfa0eefce955557c6fee8c"
 
 [[package]]
 name = "futures-io"
-version = "0.3.27"
+version = "0.3.28"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "89d422fa3cbe3b40dca574ab087abb5bc98258ea57eea3fd6f1fa7162c778b91"
+checksum = "4fff74096e71ed47f8e023204cfd0aa1289cd54ae5430a9523be060cdb849964"
 
 [[package]]
 name = "futures-sink"
-version = "0.3.27"
+version = "0.3.28"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "ec93083a4aecafb2a80a885c9de1f0ccae9dbd32c2bb54b0c3a65690e0b8d2f2"
+checksum = "f43be4fe21a13b9781a69afa4985b0f6ee0e1afab2c6f454a8cf30e2b2237b6e"
 
 [[package]]
 name = "futures-task"
-version = "0.3.27"
+version = "0.3.28"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "fd65540d33b37b16542a0438c12e6aeead10d4ac5d05bd3f805b8f35ab592879"
+checksum = "76d3d132be6c0e6aa1534069c705a74a5997a356c0dc2f86a47765e5617c5b65"
 
 [[package]]
 name = "futures-util"
-version = "0.3.27"
+version = "0.3.28"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "3ef6b17e481503ec85211fed8f39d1970f128935ca1f814cd32ac4a6842e84ab"
+checksum = "26b01e40b772d54cf6c6d721c1d1abd0647a0106a12ecaa1c186273392a69533"
 dependencies = [
  "futures-core",
  "futures-sink",
@@ -668,9 +671,9 @@ checksum = "b7e5500299e16ebb147ae15a00a942af264cf3688f47923b8fc2cd5858f23ad3"
 
 [[package]]
 name = "panic-probe"
-version = "0.3.0"
+version = "0.3.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "3ab1f00eac22bd18f8e5cae9555f2820b3a0c166b5b556ee3e203746ea6dcf3a"
+checksum = "aa6fa5645ef5a760cd340eaa92af9c1ce131c8c09e7f8926d8a24b59d26652b9"
 dependencies = [
  "cortex-m",
  "defmt",
@@ -786,6 +789,20 @@ dependencies = [
  "rp-pico",
  "rtic",
  "rtic-monotonics",
+]
+
+[[package]]
+name = "pico-tunes-dma"
+version = "0.0.0"
+dependencies = [
+ "cortex-m",
+ "cortex-m-rt",
+ "defmt",
+ "defmt-rtt",
+ "embedded-hal",
+ "fugit",
+ "panic-probe",
+ "rp-pico",
 ]
 
 [[package]]
@@ -1001,7 +1018,7 @@ dependencies = [
 [[package]]
 name = "rtic"
 version = "2.0.0-alpha.0"
-source = "git+https://github.com/rtic-rs/rtic#3a0e2ac92438c818f7f12d894c576de9af9fcc01"
+source = "git+https://github.com/rtic-rs/rtic#064cf19265f72d7f01e0847c545e6250391a2172"
 dependencies = [
  "atomic-polyfill",
  "bare-metal 1.0.0",
@@ -1014,7 +1031,7 @@ dependencies = [
 [[package]]
 name = "rtic-common"
 version = "1.0.0-alpha.0"
-source = "git+https://github.com/rtic-rs/rtic#3a0e2ac92438c818f7f12d894c576de9af9fcc01"
+source = "git+https://github.com/rtic-rs/rtic#064cf19265f72d7f01e0847c545e6250391a2172"
 dependencies = [
  "critical-section",
 ]
@@ -1028,7 +1045,7 @@ checksum = "d9369355b04d06a3780ec0f51ea2d225624db777acbc60abd8ca4832da5c1a42"
 [[package]]
 name = "rtic-macros"
 version = "2.0.0-alpha.0"
-source = "git+https://github.com/rtic-rs/rtic#3a0e2ac92438c818f7f12d894c576de9af9fcc01"
+source = "git+https://github.com/rtic-rs/rtic#064cf19265f72d7f01e0847c545e6250391a2172"
 dependencies = [
  "indexmap",
  "proc-macro-error",
@@ -1040,7 +1057,7 @@ dependencies = [
 [[package]]
 name = "rtic-monotonics"
 version = "1.0.0-alpha.0"
-source = "git+https://github.com/rtic-rs/rtic#3a0e2ac92438c818f7f12d894c576de9af9fcc01"
+source = "git+https://github.com/rtic-rs/rtic#064cf19265f72d7f01e0847c545e6250391a2172"
 dependencies = [
  "atomic-polyfill",
  "cfg-if",
@@ -1053,7 +1070,7 @@ dependencies = [
 [[package]]
 name = "rtic-time"
 version = "1.0.0-alpha.0"
-source = "git+https://github.com/rtic-rs/rtic#3a0e2ac92438c818f7f12d894c576de9af9fcc01"
+source = "git+https://github.com/rtic-rs/rtic#064cf19265f72d7f01e0847c545e6250391a2172"
 dependencies = [
  "critical-section",
  "futures-util",
@@ -1071,9 +1088,9 @@ dependencies = [
 
 [[package]]
 name = "rustix"
-version = "0.37.4"
+version = "0.37.5"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "c348b5dc624ecee40108aa2922fed8bad89d7fcc2b9f8cb18f632898ac4a37f9"
+checksum = "0e78cc525325c06b4a7ff02db283472f3c042b7ff0c391f96c6d5ac6f4f91b75"
 dependencies = [
  "bitflags",
  "errno",
