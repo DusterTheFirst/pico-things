@@ -19,6 +19,6 @@ The PIO has a total of 9 instructions: `JMP`, `WAIT`, `IN`, `OUT`, `PUSH`, `MOV`
 
 ### PIO DVI Output
 
-[rp2040-doc-license]: graphics/LICENSE "Licensing information"
-[figure-38-pio-block-diagram]: graphics/figure-38-pio-block-diagram.svg "Figure 38. PIO block-level diagram"
-[figure-39-pio-state-machine-overview]: graphics/figure-39-pio-state-machine-overview.svg "Figure 39. State machine overview."
+[rp2040-doc-license]: .github/graphics/LICENSE "Licensing information"
+[figure-38-pio-block-diagram]: .github/graphics/figure-38-pio-block-diagram.svg "Figure 38. PIO block-level diagram"
+[figure-39-pio-state-machine-overview]: .github/graphics/figure-39-pio-state-machine-overview.svg "Figure 39. State machine overview."
